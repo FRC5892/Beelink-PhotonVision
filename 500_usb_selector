@@ -1,0 +1,10 @@
+#!/bin/sh
+cat <<'EOF'
+search --no-floppy --fs-uuid --set usbswitch 38b90f0c-fa22-4123-aa8c-f9c57e6991c3
+
+if [ "$usbswitch" ] ; then
+set default=0
+else
+set default=3
+fi
+EOF

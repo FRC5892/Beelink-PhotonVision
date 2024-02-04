@@ -1,0 +1,22 @@
+#!/bin/sh
+exec tail -n +3 $0
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+menuentry 'Debian GNU/Linux (Writable)' --class debian --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-c3a2e068-6c52-45c0-beaf-b50b17809b30' {
+load_video
+insmod gzio
+if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+insmod part_gpt
+insmod ext2
+set root='hd0,gpt2'
+if [ x$feature_platform_search_hint = xy ]; then
+search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  c3a2e068-6c52-45c0-beaf-b50b17809b30
+else
+search --no-floppy --fs-uuid --set=root c3a2e068-6c52-45c0-beaf-b50b17809b30
+fi
+echo    'Loading Linux 6.1.0-17-amd64 ...'
+linux   /boot/vmlinuz-6.1.0-17-amd64 root=UUID=c3a2e068-6c52-45c0-beaf-b50b17809b30 ro  overlayroot=disabled quiet
+echo    'Loading initial ramdisk ...'
+initrd  /boot/initrd.img-6.1.0-17-amd64
+}
